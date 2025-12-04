@@ -1,178 +1,282 @@
-<!doctype html>
+<!-- Elegant Holographic Pastel Portfolio Page (Option B Enhanced) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crystal — Data Analyst Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #e3f2ff, #e9d9ff, #ffe8f2);
+      height: 100vh;
+      overflow-x: hidden;
+      color: #2b2b2b;
+    }
+
+    /* Floating glowing stars */
+    .star {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 10px white, 0 0 20px white;
+      animation: float 6s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 0.7; }
+      50% { transform: translateY(-20px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.7; }
+    }
+
+    .container {
+      text-align: center;
+      padding-top: 4rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #8aeaff, #d4a8ff, #ffb3dd, #c7f0ff);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(255,255,255,0.6);
+    }
+
+    .typing {
+      margin-top: 20px;
+    }
+
+    .card {
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 25px;
+      width: 70%;
+      margin: 3rem auto;
+      box-shadow: 0 0 25px rgba(255,255,255,0.4);
+    }
+
+    .card h2 {
+      font-size: 1.8rem;
+      background: linear-gradient(90deg, #92eaff, #d6b3ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .button {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(90deg, #9ecbff, #c4a1ff);
+      box-shadow: 0 0 15px rgba(180,140,255,0.7);
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 25px rgba(180,140,255,0.9);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Random floating glowing stars -->
+  <script>
+    for (let i = 0; i < 40; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.top = Math.random() * 100 + "vh";
+      star.style.left = Math.random() * 100 + "%";
+      star.style.animationDuration = 4 + Math.random() * 5 + "s";
+      document.body.appendChild(star);
+    }
+  </script>
+
+  <div class="container">
+    <h1>Crystal Starling</h1>
+
+    <div class="typing">
+      <img src="https://readme-typing-svg.herokuapp.com?font=Poppins&pause=1000&color=A160FF&center=true&vCenter=true&width=500&lines=Data+Analyst+%7C+Power+BI+Developer;Turning+Data+into+Smart+Decisions;Dashboards+%26+Automation+Expert;Clean+Design+%7C+Strong+Insights+%7C+Real+Impact" />
+    </div>
+
+    <div class="card">
+      <h2>About Me</h2>
+      <p>
+        I specialise in transforming raw, messy data into meaningful insights.
+        I build clean dashboards, automated workflows, business intelligence
+        systems, and interactive analytics that help teams make informed decisions.
+      </p>
+    </div>
+
+    <a class="button" href="#projects">View My Projects</a>
+  </div>
+
+</body>
+</html><!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Crystal — Data Analyst Portfolio</title>
-  <meta name="description" content="Light pastel portfolio showcasing Power BI, Python, SQL and advanced visualizations." />
+  <title>Crystal — Magical Portfolio</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg1: #f8f5ff;
-      --bg2: #fff9fb;
-      --accent1: #F6C6EA; /* pink */
-      --accent2: #CDE7F8; /* soft blue */
-      --accent3: #DFF7E6; /* mint */
-      --card-bg: rgba(255,255,255,0.75);
-      --glass: rgba(255,255,255,0.65);
-      --muted: #7b6f7a;
-      --text: #2b2b2b;
-      --glass-blur: 10px;
-      --shadow: 0 6px 24px rgba(45,45,45,0.08);
+      --bg: linear-gradient(135deg,#1b0033,#35006b,#51009f,#8b00d4,#c400ff);
+      --card: rgba(255,255,255,0.15);
+      --glass: rgba(255,255,255,0.32);
+      --text: #ffffff;
+      --neon-pink: #ff6bff;
+      --neon-blue: #7ad7ff;
+      --neon-purple: #caa6ff;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; color:var(--text)}
-
-    /* Background gradient + soft glowing blobs */
-    .hero-bg{
-      position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(135deg,var(--bg1),var(--bg2));
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--bg);
+      background-size:400% 400%;
+      animation: bgShift 14s ease infinite;
+      color:var(--text);
+      padding:30px;
     }
-    .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.95;mix-blend-mode:soft-light}
-    .blob.a{width:520px;height:520px;left:-120px;top:-80px;background:radial-gradient(circle at 30% 30%,var(--accent1),transparent 40%);} 
-    .blob.b{width:420px;height:420px;right:-60px;top:-60px;background:radial-gradient(circle at 70% 30%,var(--accent2),transparent 40%);} 
-    .blob.c{width:360px;height:360px;left:40%;bottom:-120px;background:radial-gradient(circle at 50% 50%,var(--accent3),transparent 40%);} 
 
-    /* Page container */
-    .container{max-width:1100px;margin:40px auto;padding:28px}
-    header{display:flex;align-items:center;gap:18px}
+    @keyframes bgShift{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
 
-    .avatar{width:96px;height:96px;border-radius:16px;background:linear-gradient(135deg,#fff,#fff5);box-shadow:0 8px 30px rgba(200,160,255,0.08);display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .avatar img{width:100%;height:100%;object-fit:cover}
+    h1{
+      font-size:40px;
+      text-align:center;
+      margin-bottom:20px;
+      font-weight:700;
+      font-family:'Orbitron',sans-serif;
+      color:var(--neon-blue);
+      text-shadow:0 0 20px var(--neon-blue);
+    }
 
-    .title h1{margin:0;font-size:24px}
-    .title p{margin:6px 0 0;color:var(--muted)}
+    .container{
+      max-width:1050px;
+      margin:auto;
+    }
 
-    /* typing svg */
-    .typing{margin-top:14px}
+    .card{
+      background:var(--card);
+      padding:20px;
+      border-radius:18px;
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,0.2);
+      color:var(--text);
+      margin-bottom:20px;
+      box-shadow:0 0 25px rgba(255,255,255,0.2);
+    }
 
-    /* Social icons */
-    .socials{display:flex;gap:10px;margin-left:auto}
-    .socials a{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;background:var(--card-bg);box-shadow:var(--shadow);text-decoration:none}
-    .socials svg{width:20px;height:20px;opacity:0.95}
+    .card h2{
+      color:var(--neon-pink);
+      font-size:24px;
+      margin-bottom:8px;
+      text-shadow:0 0 12px var(--neon-pink);
+    }
 
-    /* Speciality line */
-    .speciality{margin:22px 0;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(250,250,255,0.85));box-shadow:0 6px 18px rgba(100,80,120,0.04);display:flex;flex-wrap:wrap;gap:8px}
-    .pill{background:linear-gradient(90deg, rgba(246,198,234,0.9), rgba(205,231,248,0.9));padding:8px 12px;border-radius:999px;font-weight:600;color:#3a2b3d;font-size:13px}
+    .card p{
+      font-size:15px;
+      line-height:1.6;
+    }
 
-    /* Grid for cards */
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:18px}
-    .card{background:var(--card-bg);border-radius:14px;padding:16px;box-shadow:var(--shadow);backdrop-filter: blur(var(--glass-blur));border:1px solid rgba(255,255,255,0.6)}
-    .card img{width:100%;border-radius:10px;display:block}
-    .card h3{margin:12px 0 6px}
-    .card p{margin:0;color:var(--muted);font-size:14px}
+    /* Neon Buttons */
+    .btn{
+      display:inline-block;
+      padding:12px 22px;
+      border-radius:10px;
+      margin-top:16px;
+      text-decoration:none;
+      color:#fff;
+      font-weight:600;
+      background:linear-gradient(90deg,var(--neon-blue),var(--neon-purple));
+      box-shadow:0 0 18px var(--neon-blue);
+      transition:0.3s;
+    }
 
-    /* Glow accent for featured card */
-    .featured{position:relative;overflow:visible}
-    .featured::after{content:'';position:absolute;inset:auto -20px -20px -20px;border-radius:14px;background:linear-gradient(90deg,#fde8ff55,#e8fbff55);filter:blur(28px);z-index:-1}
+    .btn:hover{
+      transform:scale(1.06);
+      box-shadow:0 0 25px var(--neon-purple);
+    }
 
-    footer{margin:36px 0 80px;text-align:center;color:var(--muted)}
+    /* Floating shapes */
+    .shape{
+      position:fixed;
+      width:160px;
+      height:160px;
+      background:radial-gradient(circle,var(--neon-blue),transparent 70%);
+      border-radius:50%;
+      top:20%;left:-80px;
+      filter:blur(25px);
+      animation: float 8s infinite ease-in-out;
+      opacity:0.7;
+    }
+    .shape2{
+      position:fixed;
+      width:200px;
+      height:200px;
+      background:radial-gradient(circle,var(--neon-pink),transparent 75%);
+      border-radius:50%;
+      bottom:10%;right:-90px;
+      filter:blur(30px);
+      animation: float2 10s infinite ease-in-out;
+      opacity:0.7;
+    }
 
-    /* Responsive tweaks */
-    @media (max-width:600px){.container{padding:14px}.title h1{font-size:20px}.avatar{width:72px;height:72px}}
+    @keyframes float{
+      0%{transform:translateY(0);}
+      50%{transform:translateY(-40px);}
+      100%{transform:translateY(0);}
+    }
+    @keyframes float2{
+      0%{transform:translateY(0);}
+      50%{transform:translateY(40px);}
+      100%{transform:translateY(0);}
+    }
 
   </style>
 </head>
 <body>
-  <div class="hero-bg">
-    <div class="blob a"></div>
-    <div class="blob b"></div>
-    <div class="blob c"></div>
+
+<div class="shape"></div>
+<div class="shape2"></div>
+
+<h1>Crystal — Magical Data Analyst</h1>
+
+<div class="container">
+  <div class="card">
+    <h2>✨ Power BI Dashboards</h2>
+    <p>Interactive dashboards with neon visuals, optimized for offline & real-time workflows.</p>
+    <a href="#" class="btn">View Projects</a>
   </div>
 
-  <div class="container">
-    <header>
-      <div class="avatar">
-        <!-- Replace src with your portrait or logo -->
-        <img src="https://avatars.githubusercontent.com/u/9919?s=280&v=4" alt="avatar" />
-      </div>
-
-      <div class="title">
-        <h1>Crystal — Data Analyst</h1>
-        <p>Power BI • SQL • Python • Data Visualization • Offline & Real-time Reporting</p>
-
-        <div class="typing">
-          <!-- typing SVG (fully encoded) -->
-          <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=2E9EF7&center=true&vCenter=true&width=540&lines=Data+Analyst+%7C+Business+Intelligence;Turning+Data+into+Actionable+Insights;Data+Visualization+%26+Dashboarding+%7C+Automation+%7C+SQL+%26+Modeling+%7C+Predictive+Analytics;Passionate+about+making+data+work+for+everyone" alt="Typing SVG" />
-        </div>
-      </div>
-
-      <nav class="socials" aria-label="social links">
-        <!-- GitHub -->
-        <a href="https://github.com/yourusername" target="_blank" title="GitHub">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.97 3.22 9.18 7.69 10.66.56.1.77-.24.77-.54 0-.27-.01-1.16-.02-2.12-3.13.68-3.79-1.51-3.79-1.51-.51-1.3-1.24-1.65-1.24-1.65-1.01-.69.08-.67.08-.67 1.12.08 1.71 1.15 1.71 1.15.99 1.69 2.6 1.2 3.24.92.1-.72.39-1.2.71-1.48-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.29-.5-1.46.11-3.04 0 0 .95-.3 3.12 1.15a10.86 10.86 0 012.84-.38c.96.01 1.93.13 2.84.38 2.16-1.45 3.11-1.15 3.11-1.15.62 1.58.24 2.75.12 3.04.72.79 1.16 1.79 1.16 3.02 0 4.32-2.64 5.28-5.16 5.55.4.34.76 1.02.76 2.05 0 1.48-.01 2.67-.01 3.04 0 .3.2.65.78.54C19.04 21.92 22.25 17.7 22.25 12.75 22.25 5.48 17.27.5 11 .5z" fill="#2b2b2b"/></svg>
-        </a>
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/yourusername" target="_blank" title="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 24h5V7H0v17zM7 7v17h5v-9.25c0-2.2 2.9-2.38 2.9 0V24h5V13.4c0-5.7-6.1-5.48-7.9-2.68V7H7z" fill="#2b2b2b"/></svg>
-        </a>
-        <!-- YouTube -->
-        <a href="https://www.youtube.com/@yourchannel" target="_blank" title="YouTube">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.4s-.2-1.7-.8-2.4c-.8-.9-1.8-.9-2.3-1C16.6 2.5 12 2.5 12 2.5h-.1s-4.6 0-8.2.5c-.5.1-1.5.1-2.3 1-.6.7-.8 2.4-.8 2.4S0 8.1 0 9.8v2.5c0 1.7.2 3.4.2 3.4s.2 1.7.8 2.4c.8.9 1.8.9 2.3 1 3.6.5 8.2.5 8.2.5s4.6 0 8.2-.5c.5-.1 1.5-.1 2.3-1 .6-.7.8-2.4.8-2.4s.2-1.7.2-3.4V9.8c0-1.7-.2-3.4-.2-3.4zM9.8 15.1V8.9l5.8 3.1-5.8 3.1z" fill="#2b2b2b"/></svg>
-        </a>
-      </nav>
-    </header>
-
-    <!-- Speciality pills -->
-    <div class="speciality" aria-hidden="false">
-      <span class="pill">Data Visualization (Power BI &amp; Tableau)</span>
-      <span class="pill">Dashboard Design</span>
-      <span class="pill">Data Automation</span>
-      <span class="pill">SQL &amp; Data Modeling</span>
-      <span class="pill">Predictive Analytics</span>
-      <span class="pill">Offline &amp; Real-Time Reporting</span>
-    </div>
-
-    <!-- Grid of project cards -->
-    <section class="grid">
-      <article class="card featured">
-        <img src="assets/project-network.png" alt="Network Graph (Pastel)"/>
-        <h3>Network Graph — Relationship Mapping</h3>
-        <p>Interactive network visualization created with Python (NetworkX) and embedded in Power BI. Pastel-themed nodes with customizable clustering and edge weights.</p>
-      </article>
-
-      <article class="card">
-        <img src="assets/project-dashboard1.png" alt="Power BI Dashboard Screenshot"/>
-        <h3>Sales Insights Dashboard</h3>
-        <p>Power BI dashboard with KPIs, trend forecasting, and pastel visuals suited for executive presentations and field teams.</p>
-      </article>
-
-      <article class="card">
-        <img src="assets/project-cluster.png" alt="Gradient Cluster Plot"/>
-        <h3>Gradient Cluster Plot</h3>
-        <p>Embedded Python visual (matplotlib) showing gradient clusters with K-means segmentation and annotation for business-facing storytelling.</p>
-      </article>
-
-      <article class="card">
-        <img src="assets/project-kpi.png" alt="KPI Cards"/>
-        <h3>Pastel KPI Set & Trend Decomposition</h3>
-        <p>Small multiples of KPI cards, seasonality breakdown and decomposition tree used for strategic planning and reporting.</p>
-      </article>
-    </section>
-
-    <footer>
-      <p>Want these live? Replace the placeholder images in <code>/assets/</code> with your screenshots and update the social links. To publish: commit this index.html into a repository named <code>yourusername.github.io</code> or enable GitHub Pages from the repository settings.</p>
-      <p style="margin-top:8px;font-size:13px">Need me to generate pastel thumbnails or the exact screenshots as placeholders? Reply and I’ll create them.</p>
-    </footer>
+  <div class="card">
+    <h2>🌙 Python Visuals</h2>
+    <p>Beautiful pastel & neon-themed charts, automation scripts, and ML experiments.</p>
+    <a href="#" class="btn">Explore Visuals</a>
   </div>
 
-  <script>
-    // small helper: replace avatar and links quickly if query params present (for local preview)
-    (function(){
-      try{
-        const params = new URLSearchParams(location.search);
-        const a = params.get('avatar');
-        const gh = params.get('gh');
-        const li = params.get('li');
-        const yt = params.get('yt');
-        if(a) document.querySelector('.avatar img').src = a;
-        if(gh) document.querySelector('a[title="GitHub"]').href = gh;
-        if(li) document.querySelector('a[title="LinkedIn"]').href = li;
-        if(yt) document.querySelector('a[title="YouTube"]').href = yt;
-      }catch(e){/*ignore*/}
-    })();
-  </script>
+  <div class="card">
+    <h2>💫 SQL & Data Modeling</h2>
+    <p>Professional modeling + optimized queries used in enterprise-grade reporting systems.</p>
+    <a href="#" class="btn">See SQL Work</a>
+  </div>
+</div>
+
 </body>
 </html>
