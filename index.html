@@ -1,281 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swati Navratna— Data Analyst Portfolio</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Poppins", sans-serif;
-      background: radial-gradient(circle at top, #92fe9d 0%, #00c9ff 100%, #b3ffab 0%, #12fff7 100%);
-      height: 100vh;
-      overflow-x: hidden;
-      color: #2b2b2b;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Crystal — Pastel Interactive Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(120deg, #ffd6ff, #d6f0ff, #fffacb);
+    background-size: 400% 400%;
+    animation: bgShift 15s ease infinite;
+    overflow-x: hidden;
+  }
 
-    /* Floating glowing stars */
-    .star {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: white;
-      border-radius: 50%;
-      box-shadow: 0 0 10px white, 0 0 20px white;
-      animation: float 6s infinite ease-in-out;
-      opacity: 0.8;
-    }
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 0.7; }
-      50% { transform: translateY(-20px); opacity: 1; }
-      100% { transform: translateY(0); opacity: 0.7; }
-    }
+  h1 {
+    text-align: center;
+    padding: 30px 0;
+    font-size: 40px;
+    color: #4a4a4a;
+  }
 
-    .container {
-      text-align: center;
-      padding-top: 4rem;
-    }
+  .grid {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+  }
 
-    h1 {
-      font-size: 3rem;
-      background: linear-gradient(90deg, #8aeaff, #d4a8ff, #ffb3dd, #c7f0ff);
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 20px rgba(255,255,255,0.6);
-    }
+  .card {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 18px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
 
-    .typing {
-      margin-top: 20px;
-    }
+  .card img {
+    width: 100%;
+    border-radius: 12px;
+  }
 
-    .card {
-      backdrop-filter: blur(12px);
-      background: rgba(255,255,255,0.3);
-      border-radius: 20px;
-      padding: 25px;
-      width: 70%;
-      margin: 3rem auto;
-      box-shadow: 0 0 25px rgba(255,255,255,0.4);
-    }
+  .card-title {
+    font-size: 20px;
+    margin-top: 15px;
+    color: #444;
+    font-weight: 600;
+  }
 
-    .card h2 {
-      font-size: 1.8rem;
-      background: linear-gradient(90deg, #92eaff, #d6b3ff);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
+  /* BUTTON Colors per topic */
+  .btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 12px;
+    color: white;
+    font-weight: 600;
+  }
+  .smartpds-btn { background: #00c2a8; }
+  .sales-btn { background: #ffaf3f; }
+  .finance-btn { background: #6f6bff; }
+  .health-btn { background: #ff6fae; }
+  .ai-btn { background: #42b3ff; }
+  .survey-btn { background: #8ed63d; }
 
-    .button {
-      margin-top: 20px;
-      display: inline-block;
-      padding: 12px 25px;
-      font-size: 1.1rem;
-      border-radius: 50px;
-      text-decoration: none;
-      color: white;
-      background: linear-gradient(90deg, #9ecbff, #c4a1ff);
-      box-shadow: 0 0 15px rgba(180,140,255,0.7);
-      transition: 0.3s;
-    }
+  /* Hover-Triggered Background Animations */
+  body.ani-smartpds { background: linear-gradient(120deg, #cafff5, #b6ffd1, #fffbbb); animation: bgShift 5s linear infinite; }
+  body.ani-sales { background: linear-gradient(120deg, #fff1cc, #ffe0b5, #ffd29c); animation: bgShift 5s linear infinite; }
+  body.ani-finance { background: linear-gradient(120deg, #e4e0ff, #c7c3ff, #aca6ff); animation: bgShift 5s linear infinite; }
+  body.ani-health { background: linear-gradient(120deg, #ffd6e8, #ffb3d4, #ff94c1); animation: bgShift 5s linear infinite; }
+  body.ani-ai { background: linear-gradient(120deg, #d6f0ff, #c1e3ff, #a4d8ff); animation: bgShift 5s linear infinite; }
+  body.ani-survey { background: linear-gradient(120deg, #e3ffc9, #d6ffb3, #c6ff9e); animation: bgShift 5s linear infinite; }
 
-    .button:hover {
-      transform: scale(1.06);
-      box-shadow: 0 0 25px rgba(180,140,255,0.9);
-    }
-  </style>
+  /* Floating leaves / coins / particles */
+  .fx {
+    position: fixed;
+    top: -10px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: fall 4s linear infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-10px) rotate(0deg); }
+    100% { transform: translateY(120vh) rotate(360deg); }
+  }
+</style>
 </head>
 <body>
 
-  <!-- Random floating glowing stars -->
-  <script>
-    for (let i = 0; i < 40; i++) {
-      const star = document.createElement("div");
-      star.classList.add("star");
-      star.style.top = Math.random() * 100 + "vh";
-      star.style.left = Math.random() * 100 + "%";
-      star.style.animationDuration = 4 + Math.random() * 5 + "s";
-      document.body.appendChild(star);
-    }
-  </script>
+<h1>Crystal — Data Analyst Portfolio</h1>
 
-  <div class="container">
-    <h1>Swati Navratna</h1>
+<div class="grid">
 
-    <div class="typing">
-      <img src="https://readme-typing-svg.herokuapp.com?font=Poppins&pause=1000&color=A160FF&center=true&vCenter=true&width=500&lines=Data+Analyst+%7C+Power+BI+Developer;Turning+Data+into+Smart+Decisions;Dashboards+%26+Automation+Expert;Clean+Design+%7C+Strong+Insights+%7C+Real+Impact" />
-    </div>
-
-    <div class="card">
-      <h2>About Me</h2>
-      <p>
-        I specialise in transforming raw, messy data into meaningful insights.
-        I build clean dashboards, automated workflows, business intelligence
-        systems, and interactive analytics that help teams make informed decisions.
-      </p>
-    </div>
-
-    <a class="button" href="#projects">View My Projects</a>
+  <!-- CARD 1 Smart PDS -->
+  <div class="card" onmouseenter="triggerBG('smartpds')" onmouseleave="clearBG()">
+    <img src="assets/smartpds.jpg" alt="Smart PDS" />
+    <div class="card-title">Smart PDS Dashboard</div>
+    <a class="btn smartpds-btn" href="#">View Code</a>
   </div>
 
-</body>
-</html><!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Data Analysis Portfolio</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg: linear-gradient(135deg,#1b0033,#35006b,#51009f,#8b00d4,#c400ff);
-      --card: rgba(255,255,255,0.15);
-      --glass: rgba(255,255,255,0.32);
-      --text: #ffffff;
-      --neon-pink: #ff6bff;
-      --neon-blue: #7ad7ff;
-      --neon-purple: #caa6ff;
-    }
-
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:'Poppins',sans-serif;
-      background:var(--bg);
-      background-size:400% 400%;
-      animation: bgShift 14s ease infinite;
-      color:var(--text);
-      padding:30px;
-    }
-
-    @keyframes bgShift{
-      0%{background-position:0% 50%;}
-      50%{background-position:100% 50%;}
-      100%{background-position:0% 50%;}
-    }
-
-    h1{
-      font-size:40px;
-      text-align:center;
-      margin-bottom:20px;
-      font-weight:700;
-      font-family:'Orbitron',sans-serif;
-      color:var(--neon-blue);
-      text-shadow:0 0 20px var(--neon-blue);
-    }
-
-    .container{
-      max-width:1050px;
-      margin:auto;
-    }
-
-    .card{
-      background:var(--card);
-      padding:20px;
-      border-radius:18px;
-      backdrop-filter:blur(12px);
-      border:1px solid rgba(255,255,255,0.2);
-      color:var(--text);
-      margin-bottom:20px;
-      box-shadow:0 0 25px rgba(255,255,255,0.2);
-    }
-
-    .card h2{
-      color:var(--neon-pink);
-      font-size:24px;
-      margin-bottom:8px;
-      text-shadow:0 0 12px var(--neon-pink);
-    }
-
-    .card p{
-      font-size:15px;
-      line-height:1.6;
-    }
-
-    /* Neon Buttons */
-    .btn{
-      display:inline-block;
-      padding:12px 22px;
-      border-radius:10px;
-      margin-top:16px;
-      text-decoration:none;
-      color:#fff;
-      font-weight:600;
-      background:linear-gradient(90deg,var(--neon-blue),var(--neon-purple));
-      box-shadow:0 0 18px var(--neon-blue);
-      transition:0.3s;
-    }
-
-    .btn:hover{
-      transform:scale(1.06);
-      box-shadow:0 0 25px var(--neon-purple);
-    }
-
-    /* Floating shapes */
-    .shape{
-      position:fixed;
-      width:160px;
-      height:160px;
-      background:radial-gradient(circle,var(--neon-blue),transparent 70%);
-      border-radius:50%;
-      top:20%;left:-80px;
-      filter:blur(25px);
-      animation: float 8s infinite ease-in-out;
-      opacity:0.7;
-    }
-    .shape2{
-      position:fixed;
-      width:200px;
-      height:200px;
-      background:radial-gradient(circle,var(--neon-pink),transparent 75%);
-      border-radius:50%;
-      bottom:10%;right:-90px;
-      filter:blur(30px);
-      animation: float2 10s infinite ease-in-out;
-      opacity:0.7;
-    }
-
-    @keyframes float{
-      0%{transform:translateY(0);}
-      50%{transform:translateY(-40px);}
-      100%{transform:translateY(0);}
-    }
-    @keyframes float2{
-      0%{transform:translateY(0);}
-      50%{transform:translateY(40px);}
-      100%{transform:translateY(0);}
-    }
-
-  </style>
-</head>
-<body>
-
-<div class="shape"></div>
-<div class="shape2"></div>
-
-<h1>Data Analyst</h1>
-
-<div class="container">
-  <div class="card">
-    <h2>✨ Power BI Dashboards</h2>
-    <p>Interactive dashboards with neon visuals, optimized for offline & real-time workflows.</p>
-    <a href="#" class="btn">View Projects</a>
+  <!-- CARD 2 Sales Analysis -->
+  <div class="card" onmouseenter="triggerBG('sales')" onmouseleave="clearBG()">
+    <img src="assets/sales.jpg" alt="Sales" />
+    <div class="card-title">Sales Performance</div>
+    <a class="btn sales-btn" href="#">View Code</a>
   </div>
 
-  <div class="card">
-    <h2>🌙 Python Visuals</h2>
-    <p>Beautiful pastel & neon-themed charts, automation scripts, and ML experiments.</p>
-    <a href="#" class="btn">Explore Visuals</a>
+  <!-- CARD 3 Finance -->
+  <div class="card" onmouseenter="triggerBG('finance')" onmouseleave="clearBG()">
+    <img src="assets/finance.jpg" alt="Finance" />
+    <div class="card-title">Financial Insights</div>
+    <a class="btn finance-btn" href="#">View Code</a>
   </div>
 
-  <div class="card">
-    <h2>💫 SQL & Data Modeling</h2>
-    <p>Professional modeling + optimized queries used in enterprise-grade reporting systems.</p>
-    <a href="#" class="btn">See SQL Work</a>
+  <!-- CARD 4 Healthcare -->
+  <div class="card" onmouseenter="triggerBG('health')" onmouseleave="clearBG()">
+    <img src="assets/health.jpg" alt="Health" />
+    <div class="card-title">Healthcare KPIs</div>
+    <a class="btn health-btn" href="#">View Code</a>
   </div>
+
+  <!-- CARD 5 AI Project -->
+  <div class="card" onmouseenter="triggerBG('ai')" onmouseleave="clearBG()">
+    <img src="assets/ai.jpg" alt="AI" />
+    <div class="card-title">AI Prediction Model</div>
+    <a class="btn ai-btn" href="#">View Code</a>
+  </div>
+
+  <!-- CARD 6 Survey -->
+  <div class="card" onmouseenter="triggerBG('survey')" onmouseleave="clearBG()">
+    <img src="assets/survey.jpg" alt="Survey" />
+    <div class="card-title">Survey Insights</div>
+    <a class="btn survey-btn" href="#">View Code</a>
+  </div>
+
 </div>
+
+<script>
+// Background animation switching
+function triggerBG(type){
+  document.body.classList = '';
+  document.body.classList.add('ani-' + type);
+  spawnParticles(type);
+}
+function clearBG(){
+  document.body.classList = '';
+}
+
+// Particle effects per card
+function spawnParticles(type){
+  for(let i=0;i<15;i++){
+    const p = document.createElement('img');
+    p.classList.add('fx');
+    p.style.left = Math.random()*100 + 'vw';
+
+    if(type==='smartpds') p.src = 'assets/leaves.png';
+    if(type==='sales') p.src = 'assets/coin.png';
+    if(type==='finance') p.src = 'assets/star.png';
+    if(type==='health') p.src = 'assets/heart.png';
+    if(type==='ai') p.src = 'assets/circuit.png';
+    if(type==='survey') p.src = 'assets/bubble.png';
+
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(), 3500);
+  }
+}
+</script>
 
 </body>
 </html>
