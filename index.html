@@ -1,186 +1,231 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SwaN811 — Interactive Portfolio</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SwaN811 — Data Analyst Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(120deg, #ffd6ff, #d6f0ff, #fffacb);
-    background-size: 400% 400%;
-    animation: bgShift 15s ease infinite;
-    overflow-x: hidden;
+  :root{
+    --card-radius:16px;
+    --card-bg:rgba(255,255,255,0.85);
+    --muted:#5f6b78;
+    --maxw:1100px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Poppins,system-ui,Arial;
+    background:linear-gradient(135deg,#fff6ff,#f3fbff,#fffce6);
+    transition:background 500ms ease;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
   }
 
-  @keyframes bgShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+  header{padding:36px 20px 8px; text-align:center}
+  header h1{margin:0;font-size:30px; letter-spacing:0.4px;
+    background:linear-gradient(90deg,#8AEAFF,#D4A8FF,#FFB3DD);
+    -webkit-background-clip:text;color:transparent;font-weight:700}
 
-  h1 {
-    text-align: center;
-    padding: 30px 0;
-    font-size: 40px;
-    color: #4a4a4a;
-  }
+  .wrap{max-width:var(--maxw);margin:28px auto;padding:0 18px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  @media (max-width:880px){ .grid{grid-template-columns:1fr} }
 
-  .grid {
-    width: 90%;
-    max-width: 1100px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
+  .card{
+    background:var(--card-bg);
+    border-radius:var(--card-radius);
+    padding:14px;
+    box-shadow:0 10px 30px rgba(18,28,40,0.06);
+    overflow:hidden;
+    position:relative;
+    transition:transform .28s ease, box-shadow .28s ease;
   }
+  .card:hover{ transform:translateY(-6px); box-shadow:0 18px 40px rgba(18,28,40,0.09); }
 
-  .card {
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 18px;
-    padding: 15px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    transition: 0.3s ease;
-    position: relative;
-    overflow: hidden;
+  .preview{
+    height:220px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,rgba(0,0,0,0.02),rgba(255,255,255,0.2));
   }
+  .preview img{width:100%;height:100%;object-fit:cover}
 
-  .card img {
-    width: 100%;
-    border-radius: 12px;
+  .meta{display:flex;align-items:center;justify-content:space-between;padding-top:12px}
+  .meta .title{font-weight:600;color:#122; font-size:15px}
+  .walk-btn{
+    padding:10px 14px;border-radius:10px;border:0;color:white;font-weight:700;cursor:pointer;text-decoration:none;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
   }
+  /* per-project button color hints (and hover glow on index via body class) */
+  .btn-smartpds{ background:linear-gradient(90deg,#00c8d6,#0dbf8f); }
+  .btn-sales{ background:linear-gradient(90deg,#ff8a00,#ff3b30); }
+  .btn-finance{ background:linear-gradient(90deg,#c7ff00,#ffd500); color:#122 }
+  .btn-health{ background:linear-gradient(90deg,#ff6fbf,#ffdff0); color:#122 }
+  .btn-ai{ background:linear-gradient(90deg,#3da3ff,#07182b); }
+  .btn-survey{ background:linear-gradient(90deg,#9866ff,#a8e3ff); color:#122 }
 
-  .card-title {
-    font-size: 20px;
-    margin-top: 15px;
-    color: #444;
-    font-weight: 600;
-  }
+  /* particle small icons container (z on top) */
+  .particles { position:fixed; inset:0; pointer-events:none; z-index:5; }
 
-  /* BUTTON Colors per topic */
-  .btn {
-    padding: 10px 18px;
-    border-radius: 10px;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 12px;
-    color: white;
-    font-weight: 600;
-  }
-  .smartpds-btn { background: #00c2a8; }
-  .sales-btn { background: #ffaf3f; }
-  .finance-btn { background: #6f6bff; }
-  .health-btn { background: #ff6fae; }
-  .ai-btn { background: #42b3ff; }
-  .survey-btn { background: #8ed63d; }
-
-  /* Hover-Triggered Background Animations */
-  body.ani-smartpds { background: linear-gradient(120deg, #cafff5, #b6ffd1, #fffbbb); animation: bgShift 5s linear infinite; }
-  body.ani-sales { background: linear-gradient(120deg, #fff1cc, #ffe0b5, #ffd29c); animation: bgShift 5s linear infinite; }
-  body.ani-finance { background: linear-gradient(120deg, #e4e0ff, #c7c3ff, #aca6ff); animation: bgShift 5s linear infinite; }
-  body.ani-health { background: linear-gradient(120deg, #ffd6e8, #ffb3d4, #ff94c1); animation: bgShift 5s linear infinite; }
-  body.ani-ai { background: linear-gradient(120deg, #d6f0ff, #c1e3ff, #a4d8ff); animation: bgShift 5s linear infinite; }
-  body.ani-survey { background: linear-gradient(120deg, #e3ffc9, #d6ffb3, #c6ff9e); animation: bgShift 5s linear infinite; }
-
-  /* Floating leaves / coins / particles */
-  .fx {
-    position: fixed;
-    top: -10px;
-    width: 20px;
-    height: 20px;
-    opacity: 0.7;
-    pointer-events: none;
-    animation: fall 4s linear infinite;
-  }
-
-  @keyframes fall {
-    0% { transform: translateY(-10px) rotate(0deg); }
-    100% { transform: translateY(120vh) rotate(360deg); }
-  }
+  footer{margin:40px 0 80px;text-align:center;color:var(--muted)}
+  code {background:#f6f7fb;padding:2px 6px;border-radius:6px}
 </style>
 </head>
 <body>
 
-<h1>SwaN811 - Data Analyst Portfolio</h1>
+<header>
+  <h1>SwaN — Data Analyst Portfolio</h1>
+  <p style="margin-top:10px;color:var(--muted)">Interactive walkthroughs — hover any project to preview the theme, click Walkthrough to open a detailed page.</p>
+</header>
 
-<div class="grid">
+<div class="wrap">
+  <div class="grid">
 
-  <!-- CARD 1 Smart PDS -->
-  <div class="card" onmouseenter="triggerBG('smartpds')" onmouseleave="clearBG()">
-    <img src="assets/images/SmartPDS.jpg" alt="Smart PDS" />
-    <div class="card-title">Smart PDS Dashboard</div>
-    <a class="btn smartpds-btn" href="walkthrough.html">Project Walkthrough</a>
+    <!-- 1 Smart PDS -->
+    <article class="card" data-key="smartpds" data-gradient="linear-gradient(135deg,#00c8d6,#0dbf8f)">
+      <div class="preview">
+        <img src="assets/images/SmartPds.jpg" alt="Smart PDS">
+      </div>
+      <div class="meta">
+        <div>
+          <div class="title">Smart PDS Dashboard</div>
+          <div style="font-size:13px;color:var(--muted)">Ration & supply analytics (Power BI)</div>
+        </div>
+        <a class="walk-btn btn-smartpds" href="walkthrough.html?project=smartpds">Walkthrough</a>
+      </div>
+    </article>
+
+    <!-- 2 Sales -->
+    <article class="card" data-key="sales" data-gradient="linear-gradient(135deg,#ff8a00,#ff3b30)">
+      <div class="preview">
+        <img src="assets/sales_preview.png" alt="Sales">
+      </div>
+      <div class="meta">
+        <div>
+          <div class="title">Sales Performance</div>
+          <div style="font-size:13px;color:var(--muted)">Forecasting & KPI trends</div>
+        </div>
+        <a class="walk-btn btn-sales" href="walkthrough.html?project=sales">Walkthrough</a>
+      </div>
+    </article>
+
+    <!-- 3 Finance -->
+    <article class="card" data-key="finance" data-gradient="linear-gradient(135deg,#c7ff00,#ffd500)">
+      <div class="preview">
+        <img src="assets/finance_preview.png" alt="Finance">
+      </div>
+      <div class="meta">
+        <div>
+          <div class="title">Financial Insights</div>
+          <div style="font-size:13px;color:var(--muted)">Cost & revenue planning</div>
+        </div>
+        <a class="walk-btn btn-finance" href="walkthrough.html?project=finance">Walkthrough</a>
+      </div>
+    </article>
+
+    <!-- 4 Health -->
+    <article class="card" data-key="health" data-gradient="linear-gradient(135deg,#ff6fbf,#ffdff0)">
+      <div class="preview">
+        <img src="assets/health_preview.png" alt="Health">
+      </div>
+      <div class="meta">
+        <div>
+          <div class="title">Healthcare KPI Dashboard</div>
+          <div style="font-size:13px;color:var(--muted)">Service & outcome monitoring</div>
+        </div>
+        <a class="walk-btn btn-health" href="walkthrough.html?project=health">Walkthrough</a>
+      </div>
+    </article>
+
+    <!-- 5 AI -->
+    <article class="card" data-key="ai" data-gradient="linear-gradient(135deg,#3da3ff,#07182b)">
+      <div class="preview">
+        <img src="assets/ai_preview.png" alt="AI">
+      </div>
+      <div class="meta">
+        <div>
+          <div class="title">AI Prediction & ML Model</div>
+          <div style="font-size:13px;color:var(--muted)">Prediction pipelines & evaluation</div>
+        </div>
+        <a class="walk-btn btn-ai" href="walkthrough.html?project=ai">Walkthrough</a>
+      </div>
+    </article>
+
+    <!-- 6 Survey -->
+    <article class="card" data-key="survey" data-gradient="linear-gradient(135deg,#9866ff,#a8e3ff)">
+      <div class="preview">
+        <img src="assets/survey_preview.png" alt="Survey">
+      </div>
+      <div class="meta">
+        <div>
+          <div class="title">Survey & Feedback Insights</div>
+          <div style="font-size:13px;color:var(--muted)">Sentiment & segmentation</div>
+        </div>
+        <a class="walk-btn btn-survey" href="walkthrough.html?project=survey">Walkthrough</a>
+      </div>
+    </article>
+
   </div>
-
-  <!-- CARD 2 Sales Analysis -->
-  <div class="card" onmouseenter="triggerBG('sales')" onmouseleave="clearBG()">
-    <img src="assets/sales.jpg" alt="Sales" />
-    <div class="card-title">Sales Performance</div>
-    <a class="btn sales-btn" href="#">View Code</a>
-  </div>
-
-  <!-- CARD 3 Finance -->
-  <div class="card" onmouseenter="triggerBG('finance')" onmouseleave="clearBG()">
-    <img src="assets/finance.jpg" alt="Finance" />
-    <div class="card-title">Financial Insights</div>
-    <a class="btn finance-btn" href="#">View Code</a>
-  </div>
-
-  <!-- CARD 4 Healthcare -->
-  <div class="card" onmouseenter="triggerBG('health')" onmouseleave="clearBG()">
-    <img src="assets/health.jpg" alt="Health" />
-    <div class="card-title">Healthcare KPIs</div>
-    <a class="btn health-btn" href="#">View Code</a>
-  </div>
-
-  <!-- CARD 5 AI Project -->
-  <div class="card" onmouseenter="triggerBG('ai')" onmouseleave="clearBG()">
-    <img src="assets/ai.jpg" alt="AI" />
-    <div class="card-title">AI Prediction Model</div>
-    <a class="btn ai-btn" href="#">View Code</a>
-  </div>
-
-  <!-- CARD 6 Survey -->
-  <div class="card" onmouseenter="triggerBG('survey')" onmouseleave="clearBG()">
-    <img src="assets/survey.jpg" alt="Survey" />
-    <div class="card-title">Survey Insights</div>
-    <a class="btn survey-btn" href="#">View Code</a>
-  </div>
-
 </div>
 
+<!-- particles container -->
+<div class="particles" id="particles"></div>
+
+<footer><p>Tip: Hover a card to preview the project theme. Click Walkthrough to open the project page.</p></footer>
+
 <script>
-// Background animation switching
-function triggerBG(type){
-  document.body.classList = '';
-  document.body.classList.add('ani-' + type);
-  spawnParticles(type);
-}
-function clearBG(){
-  document.body.classList = '';
-}
+  // hover preview: change page bg & spawn themed particles
+  const cards = document.querySelectorAll('.card');
+  const particlesEl = document.getElementById('particles');
 
-// Particle effects per card
-function spawnParticles(type){
-  for(let i=0;i<15;i++){
-    const p = document.createElement('img');
-    p.classList.add('fx');
-    p.style.left = Math.random()*100 + 'vw';
-
-    if(type==='smartpds') p.src = 'assets/leaves.png';
-    if(type==='sales') p.src = 'assets/coin.png';
-    if(type==='finance') p.src = 'assets/star.png';
-    if(type==='health') p.src = 'assets/heart.png';
-    if(type==='ai') p.src = 'assets/circuit.png';
-    if(type==='survey') p.src = 'assets/bubble.png';
-
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(), 3500);
+  // small particle icon factory (SVG circles), removed after animation
+  function spawnParticles(color, icon='circle', count=8) {
+    for (let i=0;i<count;i++){
+      const el = document.createElement('div');
+      el.style.position='absolute';
+      el.style.left=(10 + Math.random()*80) + '%';
+      el.style.top = (Math.random()*80) + 'vh';
+      el.style.width='14px';
+      el.style.height='14px';
+      el.style.borderRadius='50%';
+      el.style.background=color;
+      el.style.opacity=0.85;
+      el.style.filter='blur(6px)';
+      el.style.transform = 'translateY(-20px)';
+      el.style.transition = 'transform 1800ms linear, opacity 1600ms linear';
+      particlesEl.appendChild(el);
+      setTimeout(()=> { el.style.transform='translateY(110vh)'; el.style.opacity='0'; }, 50 + Math.random()*200);
+      setTimeout(()=> el.remove(), 1900 + Math.random()*500);
+    }
   }
-}
+
+  function onEnter(card){
+    const grad = card.dataset.gradient || 'linear-gradient(135deg,#fff6ff,#f3fbff)';
+    document.body.style.background = grad;
+    // choose a readable particle color based on gradient mid color extracted quickly
+    let color = '#ffffff';
+    if (grad.includes('#00c8d6') || grad.includes('#0dbf8f')) color = '#00d1b3'; // smartpds
+    else if (grad.includes('#ff8a00')) color = '#ffb657';
+    else if (grad.includes('#c7ff00')) color = '#eaff3b';
+    else if (grad.includes('#ff6fbf')) color = '#ff98d6';
+    else if (grad.includes('#3da3ff')) color = '#76d1ff';
+    else if (grad.includes('#9866ff')) color = '#b9a8ff';
+    spawnParticles(color, 'circle', 10);
+  }
+  function onLeave(){
+    // restore default gentle pastel gradient
+    document.body.style.background = 'linear-gradient(135deg,#fff6ff,#f3fbff,#fffce6)';
+  }
+
+  cards.forEach(c=>{
+    c.addEventListener('mouseenter', ()=> onEnter(c));
+    c.addEventListener('mouseleave', ()=> onLeave());
+  });
+
+  // Accessibility: keyboard focus change also preview
+  cards.forEach(c=>{
+    c.setAttribute('tabindex','0');
+    c.addEventListener('focus', ()=> onEnter(c));
+    c.addEventListener('blur', ()=> onLeave());
+  });
 </script>
 
 </body>
