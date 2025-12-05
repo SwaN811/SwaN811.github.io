@@ -1,123 +1,144 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project Walkthrough</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #a8e0ff, #e0c3fc, #ffdde1);
-      background-size: 400% 400%;
-      animation: bgShift 16s ease infinite;
-      padding: 30px;
-      color: #2b2b2b;
-    }
-
-    @keyframes bgShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.35);
-      padding: 25px;
-      border-radius: 18px;
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 36px;
-      background: linear-gradient(90deg, #8aeaff, #d4a8ff, #ffb3dd);
-      -webkit-background-clip: text;
-      color: transparent;
-      margin-bottom: 25px;
-      text-shadow: 0 0 18px rgba(255, 255, 255, 0.6);
-    }
-
-    .video-box {
-      width: 100%;
-      height: 380px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 18px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #5f5f5f;
-      font-size: 18px;
-      border: 1px dashed rgba(255, 255, 255, 0.4);
-    }
-
-    .dropdown {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
-      margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.6);
-    }
-
-    .button-row {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .btn {
-      padding: 12px 22px;
-      border-radius: 12px;
-      text-decoration: none;
-      color: white;
-      background: linear-gradient(90deg, #9ecbff, #c4a1ff);
-      box-shadow: 0 0 20px rgba(180, 140, 255, 0.6);
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      transform: scale(1.07);
-      box-shadow: 0 0 28px rgba(180, 140, 255, 0.9);
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Project Walkthrough</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Poppins,system-ui,Arial;transition:background 400ms ease;min-height:100vh;
+    background:linear-gradient(135deg,#fff6ff,#f3fbff,#fffce6);color:#17202A}
+  .wrap{max-width:1100px;margin:32px auto;padding:28px}
+  h1{margin:0 0 18px;font-size:30px;font-weight:700;color:transparent;
+    background:linear-gradient(90deg,#8AEAFF,#D4A8FF,#FFB3DD);-webkit-background-clip:text}
+  .card{background:rgba(255,255,255,0.9);border-radius:16px;padding:18px;backdrop-filter:blur(8px);box-shadow:0 12px 40px rgba(20,30,50,0.06)}
+  .video-box{height:420px;border-radius:12px;background:linear-gradient(180deg,rgba(0,0,0,0.02),rgba(255,255,255,0.6));display:flex;align-items:center;justify-content:center;border:1px dashed rgba(0,0,0,0.05);color:#67707a}
+  select{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);margin-top:16px;font-size:16px}
+  .row{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-top:18px}
+  .btn{padding:12px 16px;border-radius:12px;border:0;color:white;text-decoration:none;font-weight:700;cursor:pointer}
+  .back{background:linear-gradient(90deg,#88b7ff,#caa6ff)}
+  .raw{background:linear-gradient(90deg,#78c57f,#00b875)}
+  @media (max-width:720px){ .row{flex-direction:column;gap:10px} }
+</style>
 </head>
 <body>
 
-<h1>Project Walkthrough</h1>
+<div class="wrap">
+  <h1 id="pageTitle">Project Walkthrough</h1>
 
-<div class="container">
   <div class="card">
-
-    <div class="video-box">
-      Video Placeholder (Upload your walkthrough video here)
+    <div class="video-box" id="videoBox">
+      <!-- We'll insert <video> or <img> inside depending on availability -->
+      <div id="videoPlaceholder">Video Placeholder — add your walkthrough video file in /videos/ and update the path in the project list.</div>
     </div>
 
-    <select class="dropdown">
-      <option>Smart PDS Workflow</option>
-      <option>Sales Dashboard</option>
-      <option>Finance Analytics</option>
-      <option>HR Insights</option>
-      <option>Supply Chain Model</option>
-      <option>Customer Churn Model</option>
+    <select id="projectSelect" aria-label="Select project walkthrough">
+      <!-- Options populated by JS -->
     </select>
 
-    <div class="button-row">
-      <a href="index.html" class="btn">⬅ Back</a>
-      <a href="#" class="btn">View Raw Code on GitHub</a>
+    <div class="row">
+      <a href="index.html" class="btn back">← Back</a>
+      <a id="rawBtn" class="btn raw" href="#" target="_blank" rel="noopener">View Raw Code on GitHub</a>
     </div>
-
   </div>
 </div>
+
+<script>
+  // Project config (dummy links & placeholder videos)
+  const projects = {
+    smartpds: {
+      label: "Smart PDS Walkthrough",
+      gradient: "linear-gradient(135deg,#00c8d6,#0dbf8f)",
+      video: "https://www.w3schools.com/html/mov_bbb.mp4", // placeholder
+      raw: "https://raw.githubusercontent.com/username/smartpds/main/README.md"
+    },
+    sales: {
+      label: "Sales Performance Walkthrough",
+      gradient: "linear-gradient(135deg,#ff8a00,#ff3b30)",
+      video: "https://www.w3schools.com/html/movie.mp4",
+      raw: "https://raw.githubusercontent.com/username/sales-insights/main/README.md"
+    },
+    finance: {
+      label: "Financial Insights Walkthrough",
+      gradient: "linear-gradient(135deg,#c7ff00,#ffd500)",
+      video: "https://www.w3schools.com/html/mov_bbb.mp4",
+      raw: "https://raw.githubusercontent.com/username/finance-insights/main/README.md"
+    },
+    health: {
+      label: "Healthcare KPI Walkthrough",
+      gradient: "linear-gradient(135deg,#ff6fbf,#ffdff0)",
+      video: "https://www.w3schools.com/html/movie.mp4",
+      raw: "https://raw.githubusercontent.com/username/health-kpi/main/README.md"
+    },
+    ai: {
+      label: "AI Prediction & ML Model Walkthrough",
+      gradient: "linear-gradient(135deg,#3da3ff,#07182b)",
+      video: "https://www.w3schools.com/html/mov_bbb.mp4",
+      raw: "https://raw.githubusercontent.com/username/ai-model/main/README.md"
+    },
+    survey: {
+      label: "Survey & Feedback Walkthrough",
+      gradient: "linear-gradient(135deg,#9866ff,#a8e3ff)",
+      video: "https://www.w3schools.com/html/movie.mp4",
+      raw: "https://raw.githubusercontent.com/username/survey-insights/main/README.md"
+    }
+  };
+
+  // helper: get project key from URL ?project=...
+  const params = new URLSearchParams(location.search);
+  let activeKey = params.get('project') || 'smartpds';
+
+  // populate select
+  const sel = document.getElementById('projectSelect');
+  Object.keys(projects).forEach(k=>{
+    const opt = document.createElement('option');
+    opt.value = k; opt.textContent = projects[k].label;
+    sel.appendChild(opt);
+  });
+
+  // elements
+  const pageTitle = document.getElementById('pageTitle');
+  const rawBtn = document.getElementById('rawBtn');
+  const videoBox = document.getElementById('videoBox');
+  const videoPlaceholder = document.getElementById('videoPlaceholder');
+
+  function loadProject(key){
+    const p = projects[key];
+    if(!p) return;
+    // background
+    document.body.style.background = p.gradient;
+    // title
+    pageTitle.textContent = p.label;
+    // raw link
+    rawBtn.href = p.raw;
+    // set select
+    sel.value = key;
+    // set video content
+    videoBox.innerHTML = ''; // clear
+    // If you prefer an <img> or static preview, swap here. We'll try to show video tag (controls).
+    const v = document.createElement('video');
+    v.controls = true; v.playsInline = true; v.style.width='100%'; v.style.height='100%'; v.style.borderRadius='8px';
+    const src = document.createElement('source'); src.src = p.video; src.type = 'video/mp4';
+    v.appendChild(src);
+    videoBox.appendChild(v);
+  }
+
+  // initial load
+  loadProject(activeKey);
+
+  // when dropdown changes
+  sel.addEventListener('change', ()=> {
+    loadProject(sel.value);
+    // update URL without reload for shareability
+    const url = new URL(window.location);
+    url.searchParams.set('project', sel.value);
+    window.history.replaceState({}, '', url);
+  });
+
+  // ensure when someone comes without param -> selection works
+  // If the user clicked a Walkthrough link from index.html, project param should be present.
+</script>
 
 </body>
 </html>
