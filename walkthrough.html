@@ -14,12 +14,20 @@
     background:linear-gradient(90deg,#8AEAFF,#D4A8FF,#FFB3DD);-webkit-background-clip:text}
   .card{background:rgba(255,255,255,0.9);border-radius:16px;padding:18px;backdrop-filter:blur(8px);box-shadow:0 12px 40px rgba(20,30,50,0.06)}
   .video-box{height:420px;border-radius:12px;background:linear-gradient(180deg,rgba(0,0,0,0.02),rgba(255,255,255,0.6));display:flex;align-items:center;justify-content:center;border:1px dashed rgba(0,0,0,0.05);color:#67707a}
-  select{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);margin-top:16px;font-size:16px}
+  select{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);margin-top:16px;font-size:16}
   .row{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-top:18px}
-  .btn{padding:12px 16px;border-radius:12px;border:0;color:white;text-decoration:none;font-weight:700;cursor:pointer}
-  .back{background:linear-gradient(90deg,#88b7ff,#caa6ff)}
-  .raw{background:linear-gradient(90deg,#78c57f,#00b875)}
-  @media (max-width:720px){ .row{flex-direction:column;gap:10px} }
+  .btn{padding:12px 16px;border-radius:12px;border:0;color:white;text-decoration:none;font-weight:700;cursor:pointer;transition:0.3s}
+  .back, .raw{transition:0.3s}
+  .action-row{display:flex;gap:12px;align-items:center;margin-top:16px}
+  .action-btn{padding:10px 14px;border-radius:10px;border:none;color:white;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:0.3s}
+  .comment-btn{background:#ff7f50}
+  .heart-btn{background:#ff4b5c}
+  #commentsList{margin-top:8px;max-height:100px;overflow-y:auto;font-size:14px;color:#17202A;}
+  .comment-item{padding:4px 8px;border-radius:8px;background:rgba(255,255,255,0.6);margin-bottom:4px;}
+  @media (max-width:720px){ 
+    .row{flex-direction:column;gap:10px} 
+    .action-row{flex-direction:column;align-items:flex-start}
+  }
 </style>
 </head>
 <body>
@@ -29,13 +37,20 @@
 
   <div class="card">
     <div class="video-box" id="videoBox">
-      <!-- We'll insert <video> or <img> inside depending on availability -->
       <div id="videoPlaceholder">Video Placeholder — add your walkthrough video file in /videos/ and update the path in the project list.</div>
     </div>
 
-    <select id="projectSelect" aria-label="Select project walkthrough">
-      <!-- Options populated by JS -->
-    </select>
+    <div class="row">
+      <select id="projectSelect" aria-label="Select project walkthrough">
+        <!-- Options populated by JS -->
+      </select>
+      <div class="action-row">
+        <button id="commentBtn" class="action-btn comment-btn">💬 Comment</button>
+        <button id="heartBtn" class="action-btn heart-btn">❤️ Like <span id="likeCount">0</span></button>
+      </div>
+    </div>
+
+    <div id="commentsList"></div>
 
     <div class="row">
       <a href="index.html" class="btn back">← Back</a>
@@ -45,12 +60,11 @@
 </div>
 
 <script>
-  // Project config (dummy links & placeholder videos)
   const projects = {
     smartpds: {
       label: "Smart PDS Walkthrough",
       gradient: "linear-gradient(135deg,#00c8d6,#0dbf8f)",
-      video: "https://www.w3schools.com/html/mov_bbb.mp4", // placeholder
+      video: "https://www.w3schools.com/html/mov_bbb.mp4",
       raw: "https://raw.githubusercontent.com/username/smartpds/main/README.md"
     },
     sales: {
@@ -62,84 +76,105 @@
     finance: {
       label: "Financial Insights Walkthrough",
       gradient: "linear-gradient(135deg,#c7ff00,#ffd500)",
-      video: "https://www.w3schools.com/html/mov_bbb.mp4",
+      video: "https://sample-videos.com/video123/mp4/480/big_buck_bunny.mp4",
       raw: "https://raw.githubusercontent.com/username/finance-insights/main/README.md"
     },
     health: {
       label: "Healthcare KPI Walkthrough",
       gradient: "linear-gradient(135deg,#ff6fbf,#ffdff0)",
-      video: "https://www.w3schools.com/html/movie.mp4",
+      video: "https://sample-videos.com/video123/mp4/480/small.mp4",
       raw: "https://raw.githubusercontent.com/username/health-kpi/main/README.md"
     },
     ai: {
       label: "AI Prediction & ML Model Walkthrough",
       gradient: "linear-gradient(135deg,#3da3ff,#07182b)",
-      video: "https://www.w3schools.com/html/mov_bbb.mp4",
+      video: "https://sample-videos.com/video123/mp4/480/asdasd2.mp4",
       raw: "https://raw.githubusercontent.com/username/ai-model/main/README.md"
     },
     survey: {
       label: "Survey & Feedback Walkthrough",
       gradient: "linear-gradient(135deg,#9866ff,#a8e3ff)",
-      video: "https://www.w3schools.com/html/movie.mp4",
+      video: "https://sample-videos.com/video123/mp4/480/sample.mp4",
       raw: "https://raw.githubusercontent.com/username/survey-insights/main/README.md"
     }
   };
 
-  // helper: get project key from URL ?project=...
   const params = new URLSearchParams(location.search);
   let activeKey = params.get('project') || 'smartpds';
 
-  // populate select
   const sel = document.getElementById('projectSelect');
+  const pageTitle = document.getElementById('pageTitle');
+  const rawBtn = document.getElementById('rawBtn');
+  const videoBox = document.getElementById('videoBox');
+  const commentBtn = document.getElementById('commentBtn');
+  const heartBtn = document.getElementById('heartBtn');
+  const backBtn = document.querySelector('.back');
+  const likeCountEl = document.getElementById('likeCount');
+  const commentsList = document.getElementById('commentsList');
+
+  let likeCount = 0;
+
   Object.keys(projects).forEach(k=>{
     const opt = document.createElement('option');
     opt.value = k; opt.textContent = projects[k].label;
     sel.appendChild(opt);
   });
 
-  // elements
-  const pageTitle = document.getElementById('pageTitle');
-  const rawBtn = document.getElementById('rawBtn');
-  const videoBox = document.getElementById('videoBox');
-  const videoPlaceholder = document.getElementById('videoPlaceholder');
-
   function loadProject(key){
     const p = projects[key];
     if(!p) return;
-    // background
     document.body.style.background = p.gradient;
-    // title
     pageTitle.textContent = p.label;
-    // raw link
     rawBtn.href = p.raw;
-    // set select
     sel.value = key;
-    // set video content
-    videoBox.innerHTML = ''; // clear
-    // If you prefer an <img> or static preview, swap here. We'll try to show video tag (controls).
+
+    // Update all buttons gradient
+    commentBtn.style.background = p.gradient;
+    heartBtn.style.background = p.gradient;
+    backBtn.style.background = p.gradient;
+    rawBtn.style.background = p.gradient;
+
+    // Load video
+    videoBox.innerHTML = '';
     const v = document.createElement('video');
     v.controls = true; v.playsInline = true; v.style.width='100%'; v.style.height='100%'; v.style.borderRadius='8px';
     const src = document.createElement('source'); src.src = p.video; src.type = 'video/mp4';
     v.appendChild(src);
     videoBox.appendChild(v);
+
+    // Reset comments and likes for demo
+    commentsList.innerHTML = '';
+    likeCount = 0;
+    likeCountEl.textContent = likeCount;
   }
 
-  // initial load
   loadProject(activeKey);
 
-  // when dropdown changes
   sel.addEventListener('change', ()=> {
     loadProject(sel.value);
-    // update URL without reload for shareability
     const url = new URL(window.location);
     url.searchParams.set('project', sel.value);
     window.history.replaceState({}, '', url);
   });
 
-  // ensure when someone comes without param -> selection works
-  // If the user clicked a Walkthrough link from index.html, project param should be present.
+  commentBtn.addEventListener('click', ()=>{
+    const comment = prompt('Enter your comment:');
+    if(comment && comment.trim() !== ''){
+      const div = document.createElement('div');
+      div.className = 'comment-item';
+      div.textContent = comment.trim();
+      commentsList.appendChild(div);
+    }
+  });
+
+  heartBtn.addEventListener('click', ()=>{
+    likeCount++;
+    likeCountEl.textContent = likeCount;
+  });
+
 </script>
 
 </body>
 </html>
+
 
