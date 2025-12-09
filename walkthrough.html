@@ -4,62 +4,97 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Project Walkthrough</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
   *{box-sizing:border-box}
-  body{margin:0;font-family:Poppins,system-ui,Arial;transition:background 400ms ease;min-height:100vh;
-    background:linear-gradient(135deg,#fff6ff,#f3fbff,#fffce6);color:#17202A}
+  body{
+    margin:0;
+    font-family:Poppins,system-ui,Arial;
+    transition:background 400ms ease;
+    min-height:100vh;
+    background:linear-gradient(135deg,#fff6ff,#f3fbff,#fffce6);
+    color:#17202A;
+  }
   .wrap{max-width:1100px;margin:32px auto;padding:28px}
-  h1{margin:0 0 18px;font-size:30px;font-weight:700;color:transparent;
-    background:linear-gradient(90deg,#8AEAFF,#D4A8FF,#FFB3DD);-webkit-background-clip:text}
-  .card{background:rgba(255,255,255,0.9);border-radius:16px;padding:18px;backdrop-filter:blur(8px);box-shadow:0 12px 40px rgba(20,30,50,0.06)}
-  .video-box{height:420px;border-radius:12px;background:linear-gradient(180deg,rgba(0,0,0,0.02),rgba(255,255,255,0.6));display:flex;align-items:center;justify-content:center;border:1px dashed rgba(0,0,0,0.05);color:#67707a}
-  select{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);margin-top:16px;font-size:16}
-  .row{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-top:18px}
-  .btn{padding:12px 16px;border-radius:12px;border:0;color:white;text-decoration:none;font-weight:700;cursor:pointer;transition:0.3s}
-  .back, .raw{transition:0.3s}
-  .action-row{display:flex;gap:12px;align-items:center;margin-top:16px}
-  .action-btn{padding:10px 14px;border-radius:10px;border:none;color:white;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:0.3s}
-  .comment-btn{background:#ff7f50}
-  .heart-btn{background:#ff4b5c}
-  #commentsList{margin-top:8px;max-height:100px;overflow-y:auto;font-size:14px;color:#17202A;}
-  .comment-item{padding:4px 8px;border-radius:8px;background:rgba(255,255,255,0.6);margin-bottom:4px;}
+  h1{
+    margin:0 0 18px;
+    font-size:30px;
+    font-weight:700;
+    color:white;
+    padding:12px 20px;
+    border-radius:12px;
+  }
+  .card{
+    background:rgba(255,255,255,0.9);
+    border-radius:16px;
+    padding:18px;
+    backdrop-filter:blur(8px);
+    box-shadow:0 12px 40px rgba(20,30,50,0.06)
+  }
+  .video-box{
+    height:420px;
+    border-radius:12px;
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  select{
+    flex:1;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);
+    margin-top:16px;font-size:16px
+  }
+  .row{
+    display:flex;gap:16px;align-items:center;
+    justify-content:space-between;margin-top:18px
+  }
+  .btn{
+    padding:12px 16px;border-radius:12px;border:0;color:white;
+    text-decoration:none;font-weight:700;cursor:pointer;transition:0.3s
+  }
+  .heart-btn{
+    padding:10px 14px;border-radius:10px;border:none;color:white;
+    font-weight:600;cursor:pointer;display:flex;align-items:center;
+    gap:6px;transition:0.3s
+  }
   @media (max-width:720px){ 
-    .row{flex-direction:column;gap:10px} 
-    .action-row{flex-direction:column;align-items:flex-start}
+    .row{flex-direction:column;gap:10px}
   }
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
   <h1 id="pageTitle">Project Walkthrough</h1>
 
   <div class="card">
+
     <div class="video-box" id="videoBox">
-      <div id="videoPlaceholder">Video Placeholder — add your walkthrough video file in /videos/ and update the path in the project list.</div>
+      <div style="color:white;font-size:18px;">Video loading…</div>
     </div>
 
     <div class="row">
-      <select id="projectSelect" aria-label="Select project walkthrough">
-        <!-- Options populated by JS -->
-      </select>
-      <div class="action-row">
-        <button id="commentBtn" class="action-btn comment-btn">💬 Comment</button>
-        <button id="heartBtn" class="action-btn heart-btn">❤️ Like <span id="likeCount">0</span></button>
-      </div>
-    </div>
+      <select id="projectSelect" aria-label="Select project walkthrough"></select>
 
-    <div id="commentsList"></div>
+      <!-- LIKE BUTTON ONLY -->
+      <button id="heartBtn" class="heart-btn">❤️ Like <span id="likeCount">0</span></button>
+    </div>
 
     <div class="row">
       <a href="index.html" class="btn back">← Back</a>
       <a id="rawBtn" class="btn raw" href="#" target="_blank" rel="noopener">View Raw Code on GitHub</a>
     </div>
+
   </div>
 </div>
 
 <script>
+  /* --------------------------------------
+       PROJECT DATA
+  -----------------------------------------*/
   const projects = {
     smartpds: {
       label: "Smart PDS Walkthrough",
@@ -99,82 +134,88 @@
     }
   };
 
-  const params = new URLSearchParams(location.search);
-  let activeKey = params.get('project') || 'smartpds';
+  /* --------------------------------------
+        LOCAL STORAGE LIKE SYSTEM
+  -----------------------------------------*/
+  let likeData = JSON.parse(localStorage.getItem("projectLikes")) || {};
+  let userLiked = JSON.parse(localStorage.getItem("userLiked")) || {};
 
   const sel = document.getElementById('projectSelect');
   const pageTitle = document.getElementById('pageTitle');
   const rawBtn = document.getElementById('rawBtn');
   const videoBox = document.getElementById('videoBox');
-  const commentBtn = document.getElementById('commentBtn');
   const heartBtn = document.getElementById('heartBtn');
-  const backBtn = document.querySelector('.back');
   const likeCountEl = document.getElementById('likeCount');
-  const commentsList = document.getElementById('commentsList');
+  const backBtn = document.querySelector('.back');
 
-  let likeCount = 0;
-
+  /* Populate dropdown */
   Object.keys(projects).forEach(k=>{
     const opt = document.createElement('option');
-    opt.value = k; opt.textContent = projects[k].label;
+    opt.value = k;
+    opt.textContent = projects[k].label;
     sel.appendChild(opt);
   });
+
+  /* Load initial */
+  const params = new URLSearchParams(location.search);
+  let activeKey = params.get('project') || 'smartpds';
 
   function loadProject(key){
     const p = projects[key];
     if(!p) return;
-    document.body.style.background = p.gradient;
-    pageTitle.textContent = p.label;
-    rawBtn.href = p.raw;
-    sel.value = key;
 
-    // Update all buttons gradient
-    commentBtn.style.background = p.gradient;
+    document.body.style.background = p.gradient;
+    pageTitle.style.background = p.gradient;
+    pageTitle.textContent = p.label;
+
+    sel.value = key;
+    rawBtn.href = p.raw;
+
     heartBtn.style.background = p.gradient;
     backBtn.style.background = p.gradient;
     rawBtn.style.background = p.gradient;
 
-    // Load video
-    videoBox.innerHTML = '';
-    const v = document.createElement('video');
-    v.controls = true; v.playsInline = true; v.style.width='100%'; v.style.height='100%'; v.style.borderRadius='8px';
-    const src = document.createElement('source'); src.src = p.video; src.type = 'video/mp4';
+    /* Load video */
+    videoBox.innerHTML = "";
+    const v = document.createElement("video");
+    v.controls = true;
+    v.autoplay = true;
+    v.playsInline = true;
+    v.style.width="100%";
+    v.style.height="100%";
+    const src = document.createElement("source");
+    src.src = p.video;
+    src.type = "video/mp4";
     v.appendChild(src);
     videoBox.appendChild(v);
 
-    // Reset comments and likes for demo
-    commentsList.innerHTML = '';
-    likeCount = 0;
-    likeCountEl.textContent = likeCount;
+    /* Update Likes */
+    likeCountEl.textContent = likeData[key] || 0;
   }
 
   loadProject(activeKey);
 
-  sel.addEventListener('change', ()=> {
+  /* Project switching */
+  sel.addEventListener("change", ()=>{
     loadProject(sel.value);
     const url = new URL(window.location);
-    url.searchParams.set('project', sel.value);
-    window.history.replaceState({}, '', url);
+    url.searchParams.set("project", sel.value);
+    window.history.replaceState({}, "", url);
   });
 
-  commentBtn.addEventListener('click', ()=>{
-    const comment = prompt('Enter your comment:');
-    if(comment && comment.trim() !== ''){
-      const div = document.createElement('div');
-      div.className = 'comment-item';
-      div.textContent = comment.trim();
-      commentsList.appendChild(div);
-    }
-  });
+  /* Handle Like */
+  heartBtn.addEventListener("click", ()=>{
+    if (userLiked[sel.value]) return;  // Already liked
 
-  heartBtn.addEventListener('click', ()=>{
-    likeCount++;
-    likeCountEl.textContent = likeCount;
-  });
+    likeData[sel.value] = (likeData[sel.value] || 0) + 1;
+    userLiked[sel.value] = true;
 
+    localStorage.setItem("projectLikes", JSON.stringify(likeData));
+    localStorage.setItem("userLiked", JSON.stringify(userLiked));
+
+    likeCountEl.textContent = likeData[sel.value];
+  });
 </script>
 
 </body>
 </html>
-
-
